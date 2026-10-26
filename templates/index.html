@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div class="hero__content">
+        <p class="hero__kicker">Climatização residencial e comercial</p>
+        <h1>O clima certo dentro de casa, o ano inteiro.</h1>
+        <p class="hero__lead">
+          Instalamos, limpamos e mantemos ar-condicionados com técnicos treinados,
+          peças originais e um orçamento que cabe no seu bolso — sem enrolação, sem retrabalho.
+        </p>
+        <div class="hero__ctas">
+          <a href="#contato" class="btn btn--primary">Pedir orçamento grátis</a>
+          <a href="https://wa.me/{{ empresa.whatsapp }}" target="_blank" rel="noopener" class="btn btn--outline">WhatsApp</a>
+        </div>
+
+        <dl class="hero__stats">
+          <div><dt>4,9/5</dt><dd>avaliação média</dd></div>
+          <div><dt>+2.400</dt><dd>instalações e limpezas</dd></div>
+          <div><dt>90 dias</dt><dd>garantia de serviço</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <svg viewBox="0 0 420 420" class="airflow">
+          <rect x="70" y="150" width="180" height="90" rx="14" class="unit"/>
+          <rect x="88" y="172" width="144" height="10" rx="5" class="unit__vent"/>
+          <circle cx="105" cy="205" r="4" class="unit__led"/>
+          <path class="stream stream--1" d="M250 190 C 300 190, 320 150, 380 150"/>
+          <path class="stream stream--2" d="M250 205 C 300 205, 330 205, 390 205"/>
+          <path class="stream stream--3" d="M250 220 C 300 220, 320 260, 380 260"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip">
+    <div class="wrap strip__inner">
+      <span>Técnicos certificados</span>
+      <span>Peças com garantia</span>
+      <span>Atendimento em até 24h</span>
+      <span>Orçamento sem compromisso</span>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS (gerados a partir da lista SERVICOS do app.py) -->
+  <section id="servicos" class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>Serviços</h2>
+        <p>Cuidamos de todo o ciclo do seu ar-condicionado, da instalação à manutenção contínua.</p>
+      </div>
+
+      <div class="cards">
+        {% for s in servicos %}
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6">{{ s.icone | safe }}</svg>
+          </div>
+          <h3>{{ s.titulo }}</h3>
+          <p>{{ s.descricao }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section id="diferenciais" class="section section--tint">
+    <div class="wrap diff">
+      <div class="diff__art" aria-hidden="true">
+        <svg viewBox="0 0 380 380">
+          <circle cx="190" cy="190" r="150" class="ring ring--1"/>
+          <circle cx="190" cy="190" r="112" class="ring ring--2"/>
+          <circle cx="190" cy="190" r="74" class="ring ring--3"/>
+          <text x="190" y="198" text-anchor="middle" class="ring__temp">18°</text>
+        </svg>
+      </div>
+
+      <div class="diff__list">
+        <h2>Por que a {{ empresa.nome }}</h2>
+        {% for d in diferenciais %}
+        <div class="feature">
+          <h3>{{ d.titulo }}</h3>
+          <p>{{ d.texto }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section id="processo" class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>Como funciona</h2>
+        <p>Do primeiro contato à entrega do serviço, em quatro etapas simples.</p>
+      </div>
+
+      <ol class="steps">
+        {% for p in passos %}
+        <li class="step">
+          <span class="step__n">{{ loop.index }}</span>
+          <h3>{{ p.titulo }}</h3>
+          <p>{{ p.texto }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos" class="section section--dark">
+    <div class="wrap">
+      <div class="section__head section__head--light">
+        <h2>Quem já climatizou com a gente</h2>
+      </div>
+
+      <div class="testimonials" id="testimonials">
+        <button class="t-arrow t-arrow--prev" id="tPrev" aria-label="Depoimento anterior">‹</button>
+
+        <div class="t-track" id="tTrack">
+          {% for t in depoimentos %}
+          <blockquote class="t-slide{% if loop.first %} is-active{% endif %}">
+            <p>"{{ t.texto }}"</p>
+            <cite>{{ t.autor }}</cite>
+          </blockquote>
+          {% endfor %}
+        </div>
+
+        <button class="t-arrow t-arrow--next" id="tNext" aria-label="Próximo depoimento">›</button>
+      </div>
+
+      <div class="t-dots" id="tDots"></div>
+    </div>
+  </section>
+
+  <!-- ÁREA DE ATENDIMENTO -->
+  <section id="atendimento" class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>Área de atendimento</h2>
+        <p>Atendemos toda a Região Metropolitana do Recife.</p>
+      </div>
+
+      <ul class="chips">
+        {% for c in cidades %}
+        <li>{{ c }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section section--tint">
+    <div class="wrap faq">
+      <div class="section__head">
+        <h2>Perguntas frequentes</h2>
+      </div>
+
+      <div class="accordion" id="accordion">
+        {% for f in faq %}
+        <div class="acc-item{% if loop.first %} is-open{% endif %}">
+          <button class="acc-trigger" aria-expanded="{{ 'true' if loop.first else 'false' }}">
+            {{ f.pergunta }}
+          </button>
+          <div class="acc-panel">
+            <p>{{ f.resposta }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="section contato">
+    <div class="wrap contato__inner">
+      <div class="contato__info">
+        <h2>Vamos climatizar seu ambiente?</h2>
+        <p>Preencha o formulário ou fale direto com a gente. Respondemos em poucas horas.</p>
+
+        <ul class="info-list">
+          <li><strong>Telefone / WhatsApp</strong><a href="tel:+{{ empresa.whatsapp }}">{{ empresa.telefone }}</a></li>
+          <li><strong>E-mail</strong><a href="mailto:{{ empresa.email }}">{{ empresa.email }}</a></li>
+          <li><strong>Endereço</strong><span>{{ empresa.endereco }}</span></li>
+          <li><strong>Horário</strong><span>{{ empresa.horario }}</span></li>
+        </ul>
+      </div>
+
+      <form class="form" id="orcamentoForm" action="/orcamento" method="post" novalidate>
+        <div class="form__row">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required minlength="3" placeholder="Seu nome completo">
+        </div>
+
+        <div class="form__row">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" required placeholder="(81) 90000-0000">
+        </div>
+
+        <div class="form__row">
+          <label for="cidade">Cidade / bairro</label>
+          <input type="text" id="cidade" name="cidade" required placeholder="Ex.: Boa Viagem, Recife">
+        </div>
+
+        <div class="form__row">
+          <label for="servico">Tipo de serviço</label>
+          <select id="servico" name="servico" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            {% for o in opcoes_servico %}
+            <option>{{ o }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form__row">
+          <label for="mensagem">Mensagem (opcional)</label>
+          <textarea id="mensagem" name="mensagem" rows="3" placeholder="Conte um pouco mais sobre o que você precisa"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block">Solicitar orçamento</button>
+        <p class="form__feedback" id="formFeedback" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+{% endblock %}
